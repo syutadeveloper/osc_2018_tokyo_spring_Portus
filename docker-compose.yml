@@ -25,8 +25,8 @@ services:
       # NGinx is serving the assets instead of Puma. If you want to change this,
       # uncomment this line.
       #- RAILS_SERVE_STATIC_FILES='true'
-    ports:
-      - 3000:3000
+    # ports:
+      # - 3000:3000
     links:
       - db
     volumes:
@@ -99,9 +99,9 @@ services:
       - ./secrets:/secrets:ro
       - ./registry/config.yml:/etc/docker/registry/config.yml:ro
       - ./registry/init:/etc/docker/registry/init:ro
-    ports:
-      - 5000:5000
-      - 5001:5001 # required to access debug service
+    # ports:
+      # - 5000:5000
+      # - 5001:5001 # required to access debug service
     links:
       - portus:portus
 

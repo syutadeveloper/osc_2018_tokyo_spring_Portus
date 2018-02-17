@@ -25,10 +25,13 @@ services:
       # NGinx is serving the assets instead of Puma. If you want to change this,
       # uncomment this line.
       #- RAILS_SERVE_STATIC_FILES='true'
+
+    # unneeded portus port to host.
     # ports:
       # - 3000:3000
-    links:
-      - db
+    # unneeded links section. using docker-compose default network.
+    # links:
+      # - db
     volumes:
       - ./Portus/config/config.yml:/srv/Portus/config/config.yml
       - ./secrets:/certificates:ro
@@ -57,8 +60,9 @@ services:
       - PORTUS_PASSWORD=${PORTUS_PASSWORD}
 
       - PORTUS_BACKGROUND=true
-    links:
-      - db
+    # unneeded links section. using docker-compose default network.
+    # links:
+      # - db
     volumes:
       - ./secrets:/certificates:ro
 
@@ -99,11 +103,13 @@ services:
       - ./secrets:/secrets:ro
       - ./registry/config.yml:/etc/docker/registry/config.yml:ro
       - ./registry/init:/etc/docker/registry/init:ro
+    # unneeded registry port to host.
     # ports:
       # - 5000:5000
       # - 5001:5001 # required to access debug service
-    links:
-      - portus:portus
+    # unneeded links section. using docker-compose default network.
+    # links:
+      # - portus:portus
 
   nginx:
     image: library/nginx:alpine
@@ -114,9 +120,10 @@ services:
     ports:
       - 80:80
       - 443:443
-    links:
-      - registry:registry
-      - portus:portus
+    # unneeded links section. using docker-compose default network.
+    # links:
+      # - registry:registry
+      # - portus:portus
 
 volumes:
   static:

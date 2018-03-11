@@ -2,7 +2,11 @@ version: "2"
 
 services:
   portus:
+
+    # fix portus version
+    # image: opensuse/portus:head
     image: opensuse/portus:2.3
+
     environment:
       - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
 
@@ -33,12 +37,17 @@ services:
     # links:
       # - db
     volumes:
+      # append config.yml mount
       - ./Portus/config/config.yml:/srv/Portus/config/config.yml
       - ./secrets:/certificates:ro
       - static:/srv/Portus/public
 
   background:
+
+    # fix portus version
+    # image: opensuse/portus:head
     image: opensuse/portus:2.3
+
     depends_on:
       - portus
       - db
@@ -74,8 +83,10 @@ services:
 
       # Again, the password shouldn't be handled like this.
       - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+
+    # append data directory mount
     volumes:
-      - ./mariadb:/var/lib/mysql
+      - ./mariadb_volume:/var/lib/mysql
 
   registry:
     image: library/registry:2.6
@@ -99,6 +110,7 @@ services:
           threshold: 5
           backoff: 1s
     volumes:
+      # append data directory mount
       - ./registry_volume:/var/lib/registry
       - ./secrets:/secrets:ro
       - ./registry/config.yml:/etc/docker/registry/config.yml:ro
